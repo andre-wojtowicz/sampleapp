@@ -1,4 +1,4 @@
-FROM rocker/r-base:4.2.1
+FROM rstudio/r-base:4.2.1-focal
 
 RUN apt update && \
     apt install -y --no-install-recommends \
@@ -10,7 +10,7 @@ RUN apt update && \
         libssh2-1-dev && \
     rm -rf /var/lib/apt/lists/*
 
-RUN install.r packrat
+RUN R -q --no-save -e 'chooseCRANmirror(FALSE, 1); install.packages("packrat")'
 
 RUN addgroup --system app && \
     adduser --system --ingroup app app
@@ -26,7 +26,7 @@ RUN echo "local(options(shiny.port = 3838, shiny.host = '0.0.0.0'))" > /usr/lib/
 
 USER app
 
-RUN R -e 'packrat::restore()'
+RUN R -q --no-save -e 'library(packrat); restore()'
 
 EXPOSE 3838
 
