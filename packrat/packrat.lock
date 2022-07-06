@@ -31,10 +31,21 @@ Version: 1.0.6
 Hash: e1d5d860b02caa2f56f038b3b8259160
 Requires: fastmap, rlang
 
+Package: cli
+Source: RSPM
+Version: 3.3.0
+Hash: ea370f88dddadbefeecd6cc4adbc6495
+Requires: glue
+
 Package: commonmark
 Source: RSPM
 Version: 1.8.0
 Hash: 53fe90d17c46c6919b0f37e2e882975b
+
+Package: cpp11
+Source: RSPM
+Version: 0.4.2
+Hash: fb849cc15463edbe2435b0ef5d110294
 
 Package: crayon
 Source: RSPM
@@ -46,11 +57,23 @@ Source: RSPM
 Version: 0.6.29
 Hash: 071cc93357d7c2a5812d5cf348ce3272
 
+Package: dplyr
+Source: RSPM
+Version: 1.0.9
+Hash: b6405c4458dabead1cde470877bddbb7
+Requires: R6, glue, rlang, generics, lifecycle, magrittr, pillar,
+    tibble, tidyselect, vctrs
+
 Package: ellipsis
 Source: RSPM
 Version: 0.3.2
 Hash: b21bfc48556c0c6a93fc9ede6c00cfaf
 Requires: rlang
+
+Package: fansi
+Source: RSPM
+Version: 1.0.3
+Hash: cfa9c28454eeca1e082fe045a8fe6440
 
 Package: fastmap
 Source: RSPM
@@ -67,6 +90,11 @@ Package: fs
 Source: RSPM
 Version: 1.5.2
 Hash: ee8c2601709c5937c283cdcb2625fdd9
+
+Package: generics
+Source: RSPM
+Version: 0.1.2
+Hash: 96be9b5a7c595867ef4424d605adf60e
 
 Package: glue
 Source: RSPM
@@ -123,11 +151,29 @@ Source: RSPM
 Version: 0.8.1
 Hash: 502257b0c1ef1db0274ea5ecdec3c9ab
 
+Package: pillar
+Source: RSPM
+Version: 1.7.0
+Hash: 3cbdcac6157b4b365571c42c172fb37e
+Requires: cli, crayon, glue, lifecycle, rlang, ellipsis, fansi, utf8,
+    vctrs
+
+Package: pkgconfig
+Source: RSPM
+Version: 2.0.3
+Hash: 5ff5f2361851a49534c96caa2a8071c7
+
 Package: promises
 Source: RSPM
 Version: 1.2.0.1
 Hash: 4976fb21716516108f162291742b1806
-Requires: R6, Rcpp, later, rlang, magrittr
+Requires: R6, Rcpp, later, magrittr, rlang
+
+Package: purrr
+Source: RSPM
+Version: 0.3.4
+Hash: fb4c0edca61826ca0b5b33c828a7b276
+Requires: magrittr, rlang
 
 Package: rappdirs
 Source: RSPM
@@ -157,6 +203,37 @@ Package: sourcetools
 Source: RSPM
 Version: 0.1.7
 Hash: d093478ac90064e670cd4bf1a99b47b6
+
+Package: tibble
+Source: RSPM
+Version: 3.1.7
+Hash: 6c6a9d56f7328c0b17abb769484f76d1
+Requires: ellipsis, fansi, lifecycle, magrittr, pillar, rlang, vctrs,
+    pkgconfig
+
+Package: tidyr
+Source: RSPM
+Version: 1.2.0
+Hash: 0d1763bb989188a8707925849899b976
+Requires: cpp11, dplyr, ellipsis, glue, lifecycle, magrittr, purrr,
+    rlang, tibble, tidyselect, vctrs
+
+Package: tidyselect
+Source: RSPM
+Version: 1.1.2
+Hash: a768f645cc7af6a67089c666e143b7ac
+Requires: ellipsis, glue, rlang, vctrs, purrr
+
+Package: utf8
+Source: RSPM
+Version: 1.2.2
+Hash: ae77ea6ebb503eaa6ee3b7ca80ea4f1b
+
+Package: vctrs
+Source: RSPM
+Version: 0.4.1
+Hash: 3c180c5b05bf27b28b1bce7a0068ee8b
+Requires: cli, glue, rlang
 
 Package: withr
 Source: RSPM

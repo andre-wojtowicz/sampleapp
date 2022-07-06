@@ -1,5 +1,6 @@
 ui <- fluidPage(
     mainPanel(
+        dataTableOutput('table'),
         sliderInput("obs",
                     "Number of observations",
                     min = 1,

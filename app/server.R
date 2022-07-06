@@ -3,4 +3,6 @@ server <- function(input, output) {
         dist <- rnorm(input$obs)
         hist(dist, col="purple", xlab="Random values")
     })
+
+    output$table <- renderDataTable(df)
 }
