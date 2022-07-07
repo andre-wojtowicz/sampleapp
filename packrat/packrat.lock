@@ -244,3 +244,8 @@ Package: xtable
 Source: RSPM
 Version: 1.8-4
 Hash: dc0d47261b678d26032363bebd050540
+
+Package: yaml
+Source: RSPM
+Version: 2.3.5
+Hash: 006ce2bd0f10a964ab59745f81434037

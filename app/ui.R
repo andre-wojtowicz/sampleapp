@@ -1,5 +1,7 @@
 ui <- fluidPage(
     mainPanel(
+        verbatimTextOutput("build_app"),
+        verbatimTextOutput("build_data"),
         dataTableOutput('table'),
         sliderInput("obs",
                     "Number of observations [DEV!]",
