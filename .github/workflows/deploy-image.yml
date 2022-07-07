@@ -14,7 +14,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  DATA_REPOSITORY: andre-wojtowicz/sampleapp-data
 
 jobs:
   build-and-push-image:
@@ -35,7 +34,7 @@ jobs:
       - name: Checkout data repository
         uses: actions/checkout@v3
         with:
-          repository: ${{ env.DATA_REPOSITORY }}
+          repository: ${{ secrets.DATA_REPOSITORY }}
           path: tmp
           token: ${{ secrets.GH_PAT }}
           ref: ${{ github.event.inputs.branchname || github.head_ref || github.ref_name }}
