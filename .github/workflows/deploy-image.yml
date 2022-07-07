@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   repository_dispatch:
     inputs:
-      branch:
+      branchname:
         required: true
 #  push:
 #    branches:
