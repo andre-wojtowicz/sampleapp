@@ -2,7 +2,7 @@ ui <- fluidPage(
     mainPanel(
         dataTableOutput('table'),
         sliderInput("obs",
-                    "Number of observations",
+                    "Number of observations [DEV]",
                     min = 1,
                     max = 5000,
                     value = 100),
