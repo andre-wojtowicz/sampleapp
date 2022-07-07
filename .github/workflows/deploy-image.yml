@@ -69,20 +69,29 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           
-      - name: Build and push Docker image (from push)
-        if: ${{ github.event_name == 'push' }}
+      - name: get release version
+        run: |
+          if [ ${{ github.event_name }} == 'push' ]; then
+            echo "::set-output name=package_tag::${{ steps.meta.outputs.tags }}"
+          elif [ ${{ github.event_name }} == 'workflow_dispatch' ]; then
+            echo "::set-output name=package_tag::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.branchname }}"
+          else
+            echo "Unrecognized github.event_name"
+            exit 1
+          fi
+        id: var_tag
+          
+      - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.var_tag.outputs.package_tag }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Build and push Docker image (from dispatch)
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.branchname }}
-          labels: ${{ steps.meta.outputs.labels }}
+          
+      - name: Invoke deployment hook
+        uses: distributhor/workflow-webhook@v2
+        env:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+          data: '{ "package_tag": "${{ steps.var_tag.outputs.package_tag }}" }'
