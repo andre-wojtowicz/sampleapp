@@ -14,6 +14,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  DATA_REPOSITORY: andre-wojtowicz/sampleapp-data
 
 jobs:
   build-and-push-image:
@@ -26,25 +27,24 @@ jobs:
       - name: Checkout app repository
         uses: actions/checkout@v3
         
-      - name: Write app build info
+      - name: Write build info - app
         run: |
           echo -n "app: " > app/.build_data.yml
           echo $(git branch --show-current)-$(git rev-parse --short HEAD)-$(git log -1 --format=%cd --date=format:'%Y.%m.%d-%T') >> app/.build_data.yml
-          cat app/.build_data.yml
           
       - name: Checkout data repository
         uses: actions/checkout@v3
         with:
-          repository: andre-wojtowicz/sampleapp-data
+          repository: ${{ env.DATA_REPOSITORY }}
           path: tmp
           token: ${{ secrets.GH_PAT }}
           ref: ${{ github.event.inputs.branchname || github.head_ref || github.ref_name }}
           
-      - name: Copy data
+      - name: Copy files from data repository
         run: |
           cp -r tmp/* app/data/
           
-      - name: Write data build info
+      - name: Write build info - data
         run: |
           cd tmp
           echo -n "data: " >> ../app/.build_data.yml
@@ -52,11 +52,11 @@ jobs:
           cd ..
           cat app/.build_data.yml
           
-      - name: Remove data
+      - name: Remove data repository files
         run: |
           rm -rf tmp/
 
-      - name: Log in to the Container registry
+      - name: Log in to the container registry
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
@@ -69,7 +69,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           
-      - name: get release version
+      - name: Set package tag
         run: |
           if [ ${{ github.event_name }} == 'push' ]; then
             echo "::set-output name=package_tag::${{ steps.meta.outputs.tags }}"
