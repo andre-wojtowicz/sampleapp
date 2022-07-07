@@ -6,6 +6,6 @@ server <- function(input, output) {
 
     output$table <- renderDataTable(df)
 
-    output$build_app <- renderText({ build_yml$app })
-    output$build_data <- renderText({ build_yml$data })
+    output$build_app <- renderText({ paste("app:", build_yml$app) })
+    output$build_data <- renderText({ paste("data:", build_yml$data) })
 }
