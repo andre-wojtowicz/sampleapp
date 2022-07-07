@@ -2,6 +2,13 @@ name: Create and publish a Docker image
 
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+#  push:
+#    branches:
+#      - main
+#      - dev
 
 env:
   REGISTRY: ghcr.io
@@ -30,11 +37,21 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Build and push Docker image
+          
+      - name: Build and push Docker image (from push)
+        if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push Docker image (from dispatch)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ github.event.inputs.branch }}
           labels: ${{ steps.meta.outputs.labels }}
