@@ -7,6 +7,8 @@ on:
         description: 'Branch name'
         required: true
   push:
+    paths-ignore:
+      - '.github/**'
     branches:
       - main
       - dev
