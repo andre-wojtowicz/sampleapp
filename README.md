@@ -1,1 +1,1 @@
-# xsampleapp :)
+# sampleapp :)
