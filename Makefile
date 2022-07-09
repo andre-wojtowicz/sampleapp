@@ -9,7 +9,7 @@ build:
 
 run:
 	docker rm --force sampleapp 2> /dev/null
-	docker run --detach --restart=always -p 8000:3838 --name $(APPNAME) $(APPNAME)/$(VERSION)
+	docker run --detach --restart=on-failure -p 8000:3838 --name $(APPNAME) $(APPNAME)/$(VERSION)
 
 clean: clean-container clean-image
 

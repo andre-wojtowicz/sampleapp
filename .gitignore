@@ -37,8 +37,6 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-packrat/lib*/
-packrat/src/
 
 # app build data
 app/.build_data.yml

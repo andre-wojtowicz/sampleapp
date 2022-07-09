@@ -10,23 +10,24 @@ RUN apt update && \
         libssh2-1-dev && \
     rm -rf /var/lib/apt/lists/*
 
-RUN R -q --no-save -e 'chooseCRANmirror(FALSE, 1); install.packages("packrat")'
-
 RUN addgroup --system app && \
     adduser --system --ingroup app app
 
-WORKDIR /home/app
-
-COPY app .Rprofile .
-COPY packrat/init.R packrat/packrat.lock packrat/packrat.opts ./packrat/
-
-RUN chown app:app -R /home/app
-
 RUN echo "local(options(shiny.port = 3838, shiny.host = '0.0.0.0'))" > /usr/lib/R/etc/Rprofile.site
+RUN R -q --no-save -e 'chooseCRANmirror(FALSE, 1); install.packages("renv")'
 
 USER app
 
-RUN R -q --no-save -e 'library(packrat); restore()'
+WORKDIR /home/app
+
+COPY --chown=app:app .Rprofile renv.lock .
+COPY --chown=app:app renv/activate.R renv/settings.dcf ./renv/
+RUN R -q --no-save -e 'library(renv); restore()'
+
+COPY --chown=app:app app .
+
+RUN R -q --no-save -e 'shiny::runTests(".")'
+RUN rm -rf tests/
 
 EXPOSE 3838
 
